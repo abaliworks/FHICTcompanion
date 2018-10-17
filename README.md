@@ -1,8 +1,9 @@
 # FHICTcompanion
 ANDR 1 FHICT companion app
 
-* Show overview of schedule for the next week
-* show an overview of the people
-* Add more overviews 
+### App functionality
+* Show overview of user schedule for the next week.
+* show an overview of the people (or other sections of the API server)
+* Add more overviews (optional)
 * Switch between overviews
  
