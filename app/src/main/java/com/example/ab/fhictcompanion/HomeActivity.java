@@ -9,7 +9,7 @@ import android.view.View;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CardView mSchedule, mPeople, mGrades, mFontysNews, mAboutme;
+    private CardView mSchedule, mPeople, mFontysNews, mAboutme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +19,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Linking
         mSchedule = (CardView) findViewById(R.id.schedule);
         mPeople = (CardView) findViewById(R.id.people);
-        mGrades = (CardView) findViewById(R.id.grades);
         mFontysNews = (CardView) findViewById(R.id.news);
         mAboutme = (CardView) findViewById(R.id.aboutme);
         // Adding click listener
         mSchedule.setOnClickListener(this);
         mPeople.setOnClickListener(this);
-        mGrades.setOnClickListener(this);
         mFontysNews.setOnClickListener(this);
         mAboutme.setOnClickListener(this);
     }
@@ -39,19 +37,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.people:
-                i = new Intent(this,GradesActivity.class);
-                startActivity(i);
-                break;
-            case R.id.grades:
-                i = new Intent(this,GradesActivity.class);
-                startActivity(i);
-                break;
-            case R.id.news:
-                i = new Intent(this,NewsActivity.class);
+                i = new Intent(this,PeopleActivity.class);
                 startActivity(i);
                 break;
             case R.id.aboutme:
                 i = new Intent(this,AboutMeActivity.class);
+                startActivity(i);
+                break;
+            case R.id.news:
+                i = new Intent(this,NewsActivity.class);
                 startActivity(i);
                 break;
             default:
