@@ -22,7 +22,6 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".ScheduleActivity" />
         <activity android:name=".PeopleActivity" />
-        <activity android:name=".NewsActivity" />
         <activity android:name=".ScheduleListActivity"></activity>
     </application>
 
