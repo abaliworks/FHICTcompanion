@@ -17,7 +17,7 @@ public class StartActivity extends AppCompatActivity implements TokenFragment.On
     public void onFragmentInteraction(String token) {
         this.token =token;
         Log.d("YOOOOOOO", token);
-        Intent intent = new Intent(StartActivity.this, AboutMeActivity.class);
+        Intent intent = new Intent(StartActivity.this, HomeActivity.class);
         intent.putExtra("token", token);
         startActivity(intent);
         finish();
