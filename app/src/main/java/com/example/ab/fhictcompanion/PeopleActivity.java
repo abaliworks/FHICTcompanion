@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ab.fhictcompanion.Model.People;
 import com.example.ab.fhictcompanion.Model.Profile;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class PeopleActivity extends AppCompatActivity {
-
+    private JSONTask mJsonTask;
     private Button mBtnSearch;
     private EditText mEtQuery;
     private People mPeople;
@@ -38,7 +40,7 @@ public class PeopleActivity extends AppCompatActivity {
     private TextView mDisplayName, mId, mOffice, mEmail, mTelephone;
     private ProgressDialog mDialog;
 
-    @SuppressLint("WrongViewCast")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +48,30 @@ public class PeopleActivity extends AppCompatActivity {
 
         // linking
         mDialog = new ProgressDialog(PeopleActivity.this);
+
         mBtnSearch = findViewById(R.id.btnSearch);
         mEtQuery = findViewById(R.id.etsearch);
+
+        mImageView = findViewById(R.id.peepImageView);
+        mDisplayName = findViewById(R.id.peepDisplayName);
+        mId = findViewById(R.id.peepFhictId);
+        mOffice = findViewById(R.id.peepOffice);
+        mTelephone = findViewById(R.id.peepTelephoneNumber);
+        mEmail = findViewById(R.id.peepEmail);
+
         // Event handler
         mBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTask().execute();
+                mJsonTask = new JSONTask();
+                mJsonTask.execute();
             }
         });
 
     }
 
     public class JSONTask extends AsyncTask<Void, Void, Void> {
-
+        public String stringUrlPhoto,displayName,fhictId,office,email,telephone;
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -80,15 +92,16 @@ public class PeopleActivity extends AppCompatActivity {
                     sb.append(line);
                 }
                 String response = sb.toString();
-                JSONObject json = new JSONObject(response);
-
-
-                String stringUrlPhoto = json.getString("photo");
-                String displayName = json.getString("displayName");
-                String fhictId = json.getString("id");
-                String office = json.getString("office");
-                String email = json.getString("mail");
-                String telephone = json.getString("telephoneNumber");
+                JSONArray jsonArray = new JSONArray(response);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonobject = jsonArray.getJSONObject(i);
+                    stringUrlPhoto = jsonobject.getString("photo");
+                    displayName = jsonobject.getString("displayName");
+                    fhictId = jsonobject.getString("id");
+                    office = jsonobject.getString("office");
+                    email = jsonobject.getString("mail");
+                    telephone = jsonobject.getString("telephoneNumber");
+                }
 
                 URL urlPhoto = new URL(stringUrlPhoto);
                 HttpURLConnection connectionPhoto = (HttpURLConnection) urlPhoto.openConnection();
@@ -120,9 +133,12 @@ public class PeopleActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             mDialog.dismiss();
 
-            mImageView.setImageBitmap(mPeople.getPhoto());
+            Bitmap photo = mPeople.getPhoto();
+
+            mImageView.setImageBitmap(photo);
             mDisplayName.setText(mPeople.getDisplayName());
             mId.setText(mPeople.getId());
             mEmail.setText(mPeople.getMail());

@@ -6,6 +6,10 @@ public class People {
 
     private String id;
     private String displayName;
+    private String mail;
+    private String office;
+    private String telephoneNumber;
+    private Bitmap photo;
 
     public void setId(String id) {
         this.id = id;
@@ -31,10 +35,7 @@ public class People {
         this.photo = photo;
     }
 
-    private String mail;
-    private String office;
-    private String telephoneNumber;
-    private Bitmap photo;
+
 
     public String getId() {
         return id;
