@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class PeopleActivity extends AppCompatActivity {
     private EditText mEtQuery;
     private People mPeople;
     private ImageView mImageView;
-    private TextView mDisplayName, mFhictId, mOffice, mEmail, mTelephone;
+    private TextView mDisplayName, mId, mOffice, mEmail, mTelephone;
     private ProgressDialog mDialog;
 
     @SuppressLint("WrongViewCast")
@@ -81,6 +82,7 @@ public class PeopleActivity extends AppCompatActivity {
                 String response = sb.toString();
                 JSONObject json = new JSONObject(response);
 
+
                 String stringUrlPhoto = json.getString("photo");
                 String displayName = json.getString("displayName");
                 String fhictId = json.getString("id");
@@ -119,6 +121,13 @@ public class PeopleActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             mDialog.dismiss();
+
+            mImageView.setImageBitmap(mPeople.getPhoto());
+            mDisplayName.setText(mPeople.getDisplayName());
+            mId.setText(mPeople.getId());
+            mEmail.setText(mPeople.getMail());
+            mOffice.setText(mPeople.getOffice());
+            mTelephone.setText(mPeople.getTelephoneNumber());
         }
 
     }
